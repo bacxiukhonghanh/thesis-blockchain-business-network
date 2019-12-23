@@ -1,0 +1,24 @@
+query QryTrade {
+    description: "Select Trade transactions associated with a specified parcel."
+    statement:
+        SELECT org.example.mynetwork.Trade
+            WHERE (parcel CONTAINS _$qryParcelId)
+}
+query QryPutParcelIntoStock {
+    description: "Select PutParcelIntoStock transactions associated with a specified parcel."
+    statement:
+        SELECT org.example.mynetwork.PutParcelIntoStock
+            WHERE (parcel CONTAINS _$qryParcelId)
+}
+query QryForSale {
+    description: "Select ForSale transactions associated with a specified unit."
+    statement:
+        SELECT org.example.mynetwork.ForSale
+            WHERE (unit CONTAINS _$qryUnitId)
+}
+query QrySold {
+    description: "Select Sold transactions associated with a specified unit."
+    statement:
+        SELECT org.example.mynetwork.Sold
+            WHERE (unit CONTAINS _$qryUnitId)
+}

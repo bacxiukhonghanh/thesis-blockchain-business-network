@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateParcelUnitActivity">
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="407dp"
+        android:layout_height="55dp"
+        android:text="Submit"
+        android:layout_alignParentBottom="true" />
+
+    <ListView
+        android:id="@+id/listOfItems"
+        android:layout_width="340dp"
+        android:layout_height="330dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="151dp" />
+
+    <TextView
+        android:id="@+id/txtOrgId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="23dp"
+        android:text="Participant: " />
+
+    <EditText
+        android:id="@+id/txtParcelMaxQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="71dp"
+        android:ems="10"
+        android:hint="Max quantity of the parcel"
+        android:inputType="numberDecimal" />
+
+    <!--        <EditText-->
+<!--            android:id="@+id/txtParcelId"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="160dp"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:hint="Parcel ID"/>-->
+
+</RelativeLayout>

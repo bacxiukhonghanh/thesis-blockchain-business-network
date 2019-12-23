@@ -1,0 +1,274 @@
+/**
+ * Access control rules for tutorial-network (2019/12/13)
+ */
+
+/* Everyday activities rules */
+rule R1_OrgSeeUpdateThemselvesOnly {
+  description: "Organization can see and update their own profile only"
+  participant(t): "org.example.mynetwork.Organization"
+  operation: READ, UPDATE
+  resource(v): "org.example.mynetwork.Organization"
+  condition: (v.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R2_CoopSeeWorkTheirParcelOnly {
+  description: "Cooperative can see/work with their own parcels only"
+  participant(t): "org.example.mynetwork.Cooperative"
+  operation: READ, CREATE, UPDATE
+  resource(c): "org.example.mynetwork.Parcel"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R3_CoopSeeWorkTheirUnitOnly {
+  description: "Cooperative can see/work with their own units only"
+  participant(t): "org.example.mynetwork.Cooperative"
+  operation: READ, CREATE, UPDATE
+  resource(c): "org.example.mynetwork.Unit"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R4_SellerSeeWorkTheirParcelOnly {
+  description: "Seller can see/work with their own parcels only"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, UPDATE
+  resource(c): "org.example.mynetwork.Parcel"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R5_SellerSeeWorkTheirUnitOnly {
+  description: "Seller can see/work with their own units only"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, UPDATE
+  resource(c): "org.example.mynetwork.Unit"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R6_TransCompSeeUpdateTheirParcelOnly {
+  description: "Transport comp. can see/update their own parcels only"
+  participant(t): "org.example.mynetwork.TransportComp"
+  operation: READ, UPDATE
+  resource(c): "org.example.mynetwork.Parcel"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R7_TransCompSeeUpdateTheirUnitOnly {
+  description: "Transport comp. can see/update their own parcels only"
+  participant(t): "org.example.mynetwork.TransportComp"
+  operation: READ, UPDATE
+  resource(c): "org.example.mynetwork.Unit"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R8a_CoopCanEnableTradeTrans {
+  description: "Enable Coop to submit Trade transactions"
+  participant(t): "org.example.mynetwork.Cooperative"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.Trade"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R8b_TransCanEnableTradeTrans {
+  description: "Enable Trans to submit Trade transactions"
+  participant(t): "org.example.mynetwork.TransportComp"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.Trade"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R8c_SellerCanEnableTradeTrans {
+  description: "Enable Seller to submit Trade transactions"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.Trade"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+
+
+rule R9_OnlyCoopCanEnableAddUnitToParcelTrans {
+  description: "Enable only Cooperative to submit AddUnitToParcel transactions"
+  participant(t): "org.example.mynetwork.Cooperative"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.AddUnitToParcel"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R10_OnlySellerCanEnablePutParcelIntoStockTrans {
+  description: "Enable only Seller to submit PutParcelIntoStock transactions"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.PutParcelIntoStock"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R11_OnlySellerCanEnableForSaleTrans {
+  description: "Enable only Seller to submit ForSale transactions"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.ForSale"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R12_OnlySellerCanEnableSoldTrans {
+  description: "Enable only Seller to submit Sold transactions"
+  participant(t): "org.example.mynetwork.Seller"
+  operation: READ, CREATE
+  resource(v): "org.example.mynetwork.Sold"
+  condition: (v.submittedBy.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R13_GuestCanReadUnitsForParcelIDToQueryTradeTransactions {
+  description: "Enable Guest to read Units for their ParcelID to use for Trade transactions querying"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.Unit"
+  action: ALLOW
+}
+
+rule R14_GuestCanReadAddUnitToParcelTransactions {
+  description: "Enable Guest to read AddUnitToParcel transactions"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.AddUnitToParcel"
+  action: ALLOW
+}
+
+rule R15_GuestCanReadTradeTransactions {
+  description: "Enable Guest to read Trade transactions"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.Trade"
+  action: ALLOW
+}
+
+rule R16_GuestCanReadPutParcelIntoStockTransactions {
+  description: "Enable Guest to read PutParcelIntoStock transactions"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.PutParcelIntoStock"
+  action: ALLOW
+}
+
+rule R17_GuestCanReadForSaleTransactions {
+  description: "Enable Guest to read ForSale transactions"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.ForSale"
+  action: ALLOW
+}
+
+rule R18_GuestCanReadSoldTransactions {
+  description: "Enable Guest to read Sold transactions"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.Sold"
+  action: ALLOW
+}
+
+rule R19_GuestCanReadCoopInfo {
+  description: "Enable Guest to read Cooperative info to get their address"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.Cooperative"
+  action: ALLOW
+}
+
+rule R20_GuestCanReadTransInfo {
+  description: "Enable Guest to read Transport Companies info to get their address"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.TransportComp"
+  action: ALLOW
+}
+
+rule R21_GuestCanReadSellerInfo {
+  description: "Enable Guest to read Seller info to get their address"
+  participant: "org.example.mynetwork.Guest"
+  operation: READ
+  resource: "org.example.mynetwork.Seller"
+  action: ALLOW
+}
+
+rule R22_GuestCannotReadHistorianRecords {
+  description: "Guest are not allowed to read historian records"
+  participant: "org.example.mynetwork.Guest"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: DENY
+}
+
+rule R23_OrgCannotReadSystemHistorianRecords {
+  description: "Organizations cannot see system historian records"
+  participant(t): "org.example.mynetwork.Organization"
+  operation: ALL
+  resource(v): "org.hyperledger.composer.system.HistorianRecord"
+  condition: (v.participantInvoking == null)
+  action: DENY
+}
+
+rule R24_OrgSeeOwnHistoryOnly {
+  description: "Organizations should be able to see the history of their own transactions only"
+  participant(t): "org.example.mynetwork.Organization"
+  operation: READ
+  resource(v): "org.hyperledger.composer.system.HistorianRecord"
+  condition: (v.participantInvoking.getIdentifier() != t.getIdentifier())
+  action: DENY
+}
+
+rule R25_GuestCannotSeeOtherIdentities {
+  description: "Guest are not allowed to see other participants' identities"
+  participant(t): "org.example.mynetwork.Guest"
+  operation: ALL
+  resource(v): "org.hyperledger.composer.system.Identity"
+  condition: (v.participant.getIdentifier() != t.getIdentifier())
+  action: DENY
+}
+
+rule R26_OrgCannotSeeOtherIdentities {
+  description: "Organizations are not allowed to see other participants' identities"
+  participant(t): "org.example.mynetwork.Organization"
+  operation: ALL
+  resource(v): "org.hyperledger.composer.system.Identity"
+  condition: (v.participant.getIdentifier() != t.getIdentifier())
+  action: DENY
+}
+
+// System and network admin rules
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "ANY"
+  //operation: ALL
+  operation: READ
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+  description: "Grant business network administrators full access to user resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "**"
+  action: ALLOW
+}
+
+rule NetworkAdminSystem {
+  description: "Grant business network administrators full access to system resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}

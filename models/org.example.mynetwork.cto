@@ -1,0 +1,131 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+ //2019/12/11
+
+namespace org.example.mynetwork
+
+/** ASSETS OF BUSINESS NETWORK */
+enum ParcelStatus {
+  o PREPARING
+  o DELIVERING
+  o INSTOCK
+}
+
+asset Parcel identified by parcelId {
+  // id assigned for each parcel
+  o String parcelId                          
+  o String description
+  // amount of max units per parcel
+  o Integer maxQuantity   
+  // amount of current units per parcel                   
+  o Integer currQuantity default=0 optional  
+  // status of each parcel
+  o ParcelStatus pStatus default="PREPARING" 
+  // list of units
+  --> Unit[] units optional  
+  // parcel's owner                
+  --> Organization owner                     
+}
+
+enum UnitStatus {
+  o DELIVERING
+  o INSTOCK
+  o SELLING
+  o SOLD
+}
+
+asset Unit identified by unitId {
+  // id assigned for each unit
+  o String unitId       
+  // id of parcel this unit belongs to                     
+  o String parcelId default="N/A" optional   
+  o String description
+  o String createdDate
+  o String sellingDate default="dd/mm/yyyy" optional
+  o String soldDate default="dd/mm/yyyy" optional
+  // status of each unit
+  o UnitStatus uStatus default="DELIVERING"    
+  // unit's owner                   
+  --> Organization owner                     
+}
+
+/** PARTICIPANTS OF BUSINESS NETWORK */
+// abstract participant
+abstract participant Organization identified by orgId {
+  o String orgId
+  o String name
+  o String country default="Vietnam"
+  o String phone default="N/A"
+  o String email default="N/A"
+}
+
+participant Cooperative extends Organization {
+  o String description
+}
+
+participant TransportComp extends Organization {
+  o String description
+}
+
+participant Seller extends Organization {
+  o String description
+}
+
+// participant Guest does not belong to Organization
+participant Guest identified by guestId {
+  o String guestId
+}
+
+/** TRANSACTION TYPES OF BUSINESS NETWORK */
+// transaction to add a specific unit to the parcel that it belongs to
+transaction AddUnitToParcel {
+  --> Parcel parcel
+  --> Unit[] unit
+  --> Organization submittedBy
+}
+
+enum ShipperGender {
+  o MALE
+  o FEMALE
+}
+ 
+// transaction to trade the parcel from oldOwner to newOwner
+transaction Trade {
+  o String shipper_name
+  o ShipperGender shipper_gender
+  o String shipper_id
+  //o String transcomp_id     // transport company that shipper belongs to 
+  --> Parcel[] parcel
+  --> Organization submittedBy
+  --> Organization newOwner
+}
+
+// transaction in which a Seller indicates that they've put a Parcel into their stock
+transaction PutParcelIntoStock {
+  --> Parcel[] parcel
+  --> Organization submittedBy
+}
+
+// transaction allows Seller indicates that a Unit is for sale
+transaction ForSale {
+  --> Unit[] unit
+  --> Organization submittedBy
+}
+
+// transaction allows Seller indicates that a Unit is sold
+transaction Sold {
+  --> Unit[] unit
+  --> Organization submittedBy
+}

@@ -1,0 +1,33 @@
+COMPOSER_CARD=restadmin@tutorial-network
+COMPOSER_NAMESPACES=always
+COMPOSER_AUTHENTICATION=true
+COMPOSER_MULTIUSER=true
+COMPOSER_PROVIDERS='{
+  "auth0": {
+    "provider": "auth0",
+    "domain": "tutorial-network.auth0.com",
+    "auth0Domain": "tutorial-network.auth0.com",
+    "AUTH0_DOMAIN": "tutorial-network.auth0.com",
+    "clientID": "8ELoYO2r",
+    "AUTH0_CLIENT_ID": "8ELoYO2r",
+    "clientSecret": "GNuDYgRjw6Qp",
+    "AUTH0_CLIENT_SECRET": "GNuDYgRjw6Qp",
+    "module": "passport-auth0",
+    "authPath": "/auth/auth0",
+    "callbackURL": "/auth/auth0/callback",
+    "successRedirect": "/",
+    "failureRedirect": "/failed",
+    "scope": "openid profile",
+    "session": false
+  }
+}'
+COMPOSER_DATASOURCES='{
+    "db": {
+        "name": "db",
+        "connector": "mongodb",
+        "host": "mongo"
+    }
+}'
+AUTH0_DOMAIN=tutorial-network.auth0.com
+AUTH0_CLIENT_ID=8ELoYO2r
+AUTH0_CLIENT_SECRET=GNuDYgRjw6Qp
